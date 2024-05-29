@@ -5,6 +5,7 @@ import wind
 
 
 class Ui(QtWidgets.QMainWindow):
+    # noinspection PyUnresolvedReferences
     def __init__(self):
         super(Ui, self).__init__(parent=None)
         uic.loadUi('windLoad.ui', self)
