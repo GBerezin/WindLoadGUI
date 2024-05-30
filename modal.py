@@ -10,14 +10,14 @@ import wind
 class ModalSolution:
     """Модальный расчёт"""
 
-    def __init__(self):
+    def __init__(self, dz, nm, eb):
         self.f = None
-        self.data = pd.read_csv('data.csv', delimiter=';')
-        self.n = self.data.shape[0]
-        self.dz = 0.15  # отметка 0.000, [м]
+        self.rdm = pd.read_csv('rdm.csv', delimiter=';')
+        self.n = self.rdm.shape[0]
+        self.dz = dz  # отметка 0.000, [м]
         self.xi = np.hstack((0.0, self.level(self.n, self.dz)))
-        self.nm = 4  # количество учитываемых форм колебаний
-        self.eb = 42000.0  # модуль упругости бетона, [МПа]
+        self.nm = nm  # количество учитываемых форм колебаний
+        self.eb = eb  # модуль упругости бетона, [МПа]
 
     def plot_rdm(self, x):
         """Рисунок динамической модели"""
@@ -35,7 +35,7 @@ class ModalSolution:
         x = np.zeros(n)
         x_0 = dz
         for i in range(0, n):
-            x[i] = x_0 + self.data['hi'][i]
+            x[i] = x_0 + self.rdm['hi'][i]
             x_0 = x[i]
         return x
 
@@ -44,7 +44,7 @@ class ModalSolution:
 
         m = np.zeros((self.n, self.n))
         for i in range(0, self.n):
-            m[i, i] = self.data['Mp'][i]
+            m[i, i] = self.rdm['Mp'][i]
         return m
 
     def mi(self, x, xi, xj, s, ei):
@@ -107,7 +107,7 @@ class ModalSolution:
 
         print('Модальный расчёт:')
         mm = self.mass()
-        ei = self.eb * self.data['It'] * 1000
+        ei = self.eb * self.rdm['It'] * 1000
         md = self.m_d(self.xi, ei)
         dd = md @ mm
         md, u = np.linalg.eig(dd)
