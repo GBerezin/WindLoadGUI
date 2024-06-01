@@ -15,7 +15,7 @@ def zetai(tb, z):
 
 
 class WindLoads:
-    def __init__(self, wr, n, xi, a, f):
+    def __init__(self, wr, ter, bld, a, d, c, delta, xyz, gf, n, xi, f):
         self.g = const.g
         self.t11_2 = pd.read_csv('table11_2.csv', delimiter=';')
         self.t11_4 = pd.read_csv('table11_4.csv', delimiter=';')
@@ -26,15 +26,15 @@ class WindLoads:
         self.wind_region = wr  # Ветровой район
         self.n = n
         self.xi = xi
-        self.ter = 'B'  # тип местности
-        self.bld = 'здание'  # сооружение
+        self.ter = ter  # тип местности
+        self.bld = bld  # сооружение
         self.a = a  # размер здания в направлении расчетного ветра, [м]
         self.f = f
-        self.d = 60.0  # размер здания в направлении перпендикулярном расчетному направлению ветра, [м]
+        self.d = d  # размер здания в направлении перпендикулярном расчетному направлению ветра, [м]
         self.gf = 1.4  # коэффициент надёжности по нагрузке ветра
-        self.c = 1.3  # аэродинамический коэффициент
-        self.delta = 0.3  # логарифмический декремент
-        self.xyz = 'z0y'  # расчётная поверхность
+        self.c = c  # аэродинамический коэффициент
+        self.delta = delta  # логарифмический декремент
+        self.xyz = xyz  # расчётная поверхность
 
     def zei(self, h, z, d):
         """Эквивалентная высота"""
