@@ -80,10 +80,10 @@ class ModalSolution:
                     integrate.quad(self.mi, 0, xi[self.n - 1], args=(xi[i], xi[j], 1, ei[i]))[0]
         return md
 
-    def ww(self, md):
+    def ww(self, mv):
         """Круговая частота"""
 
-        w = math.sqrt(1 / md)
+        w = math.sqrt(1 / mv)
         return w
 
     def plotmode(self, xi, u):
@@ -110,9 +110,9 @@ class ModalSolution:
         ei = self.eb * self.rdm['It'] * 1000
         md = self.m_d(self.xi, ei)
         dd = md @ mm
-        md, u = np.linalg.eig(dd)
+        mv, u = np.linalg.eig(dd)
         vw = np.vectorize(self.ww)
-        w = vw(np.real(np.real(md)[:self.nm]))
+        w = vw(np.real(np.real(mv)[:self.nm]))
         print('Круговая частота, [рад/с]:')
         print(w[:4])
         t = 2 * math.pi / w
