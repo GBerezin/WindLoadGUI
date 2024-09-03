@@ -4,7 +4,6 @@ from matplotlib import pyplot as plt
 from scipy import integrate
 import math
 from scipy.interpolate import make_interp_spline
-import wind
 
 
 class ModalSolution:
@@ -47,7 +46,8 @@ class ModalSolution:
             m[i, i] = self.rdm['Mp'][i]
         return m
 
-    def mi(self, x, xi, xj, s, ei):
+    @staticmethod
+    def mi(x, xi, xj, s, ei):
         """Моменты от единичных сил"""
 
         if x <= xi:
@@ -61,7 +61,8 @@ class ModalSolution:
         m = (m0 * m1) / ei
         return m
 
-    def m_i(self, x, xi, s):
+    @staticmethod
+    def m_i(x, xi, s):
         """Моменты от единичных сил"""
 
         if x <= xi:
@@ -80,7 +81,8 @@ class ModalSolution:
                     integrate.quad(self.mi, 0, xi[self.n - 1], args=(xi[i], xi[j], 1, ei[i]))[0]
         return md
 
-    def ww(self, mv):
+    @staticmethod
+    def ww(mv):
         """Круговая частота"""
 
         w = math.sqrt(1 / mv)
